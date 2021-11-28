@@ -132,18 +132,6 @@ const students = [
   }
 ];
 
-// Question: How many students are in each department?
-function getStudentsPerDepartment() { 
-  let studentsPerDepartment = {}; 
-  for (let course of courses) {
-      if (!studentsPerDepartment[course.department]) { 
-        studentsPerDepartment[course.department] = 0; 
-      }    
-  }  
-  //console.log(studentsPerDepartment);
-  return studentsPerDepartment;
-}
-
 // Question: How many students are there per standing?
 function getStudentsPerStanding() { 
   let studentsPerStanding = {"Freshman": 0, "Sophomore": 0, "Junior": 0,"Senior": 0}; 
@@ -165,7 +153,31 @@ function getCoursesPerDepartment() {
   return coursesPerDepartment; 
 }
 
-// How many students does each professor teach to?
+// Question: How many students are in each department?
+function getStudentsPerDepartment() { 
+  let studentsPerDepartment = {}; 
+  let studentDeparment = {};
+  
+  for (let student of students) {
+    studentDeparment = {};
+    for (let sCourse of student.courses) {
+      for (let course of courses) {
+        if (sCourse === course.section) {
+          if (!studentsPerDepartment[course.department]) {
+            studentsPerDepartment[course.department] = 0; // Initialize the data
+          }
+          if(!studentDeparment[course.department]) { // Avoid duplicate count if a student attends courses from the same department
+            studentDeparment[course.department] = 1; 
+            studentsPerDepartment[course.department] += 1;
+          }            
+        }
+      }
+    }
+  }
+  return studentsPerDepartment;
+}
+
+// Question: How many students does each professor teach to?
 function getStudentsPerProfessor() { 
   let studentsPerProfessor = {}; 
   for (let course of courses) {
