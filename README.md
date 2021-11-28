@@ -1,1 +1,1 @@
-#Modern JavaScript Repo
+# Modern JavaScript Excercises
